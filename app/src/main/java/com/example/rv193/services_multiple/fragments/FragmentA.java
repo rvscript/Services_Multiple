@@ -28,6 +28,16 @@ public class FragmentA extends Fragment implements View.OnClickListener{
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(savedInstanceState == null){
+            counter = 0;
+        }
+        else{
+            counter = savedInstanceState.getInt("counter",0);
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,6 +53,12 @@ public class FragmentA extends Fragment implements View.OnClickListener{
         comm = (Communicator)getActivity();//Interface = subclass casting
         button= (Button) getActivity().findViewById(R.id.button);
         button.setOnClickListener(this);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("counter", counter);
     }
 
     @Override
