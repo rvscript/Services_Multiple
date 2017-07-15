@@ -9,13 +9,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.rv193.services_multiple.Communicator;
 import com.example.rv193.services_multiple.R;
 
 /**
- * A simple {@link Fragment} subclass.
+ * FragmentA has a button that sends information to fragmentB
+ * The information is sent through an interface that is implemented in
+ * MainActivity
  */
 public class FragmentA extends Fragment implements View.OnClickListener{
-
+    //an interface reference variable can interface with a subclass
+    //object. in this case that is MainActivity
+    //This is a property of Dynamic runtime polymorphism
+    Communicator comm;
     Button button;
     int counter=0;
     public FragmentA() {
@@ -34,11 +40,14 @@ public class FragmentA extends Fragment implements View.OnClickListener{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        comm = (Communicator)getActivity();//Interface = subclass casting
         button= (Button) getActivity().findViewById(R.id.button);
+        button.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         counter++;
+        comm.respond("The button clicked increments counter :"+ counter+" times");
     }
 }
